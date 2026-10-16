@@ -30,7 +30,11 @@ Hi! I am a graduate student in Data Science at the University of Macau. I enjoy 
 
 ![Severe crash rate by weather and lighting conditions](severe_rate_weather_lighting.png)
 
+This heatmap shows the share of crashes classified as severe (fatal or serious injury) by the combination of weather and lighting conditions in Chicago, 2024–2025. Rain paired with dark, lighted roads produced the highest severe-crash rates (up to ~2.9%), and rainy conditions overall were riskier (1.97%) than clear weather (1.60%). Crashes at night were consistently more dangerous than in daylight, highlighting the combined effect of reduced visibility and adverse weather.
+
 ![Severe crash rate by weekday and hour](severe_rate_weekday_hour.png)
+
+This heatmap displays the severe-crash rate (fatal or serious injury, %) across the day of the week and hour of day for Chicago, 2024–2025. Severe-crash risk peaks in the late-night and early-morning hours, reaching about 3.1% around 2–3 a.m., and Sundays show the highest daily average (2.01%). In contrast, weekday daytime commuting hours record the lowest rates, pointing to overnight and weekend late-night driving as elevated-risk windows.
 
 [View project repository](https://github.com/mc63151-code/data-science-project)
 
