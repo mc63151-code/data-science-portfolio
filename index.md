@@ -4,7 +4,11 @@ title: Data Science Portfolio
 
 # Tang I Choi (MC631517)
 
-Hi! I am a graduate student in Data Science at the University of Macau. I enjoy turning messy real-world data into clear, actionable insights through Python-based analysis and visualization.
+My name is I Choi Tang (Tang I Choi). I earned a B.Sc. in Intelligence Science and Technology from Sun Yat-sen University (graduating in 2026), and I am currently pursuing a graduate degree at the University of Macau, specializing in Applied Intelligence and Analytics (AIA). I have a strong interest in machine learning, data science, and their applications across various domains, especially in enhancing system performance through novel computational techniques. This portfolio reflects my hands-on experience in turning raw data into actionable insights through end-to-end analysis and visualization.
+
+In terms of research, I have led several projects. One focuses on battery lifespan evaluation using Physics-Informed Neural Networks (PINNs): I developed a model to fit Incremental Capacity curves, extract key features for state-of-health estimation, and integrated physical constraints into the neural network to improve prediction accuracy and interpretability. In another project, I led a plant leaf disease classification study, optimizing a Vision Transformer (ViT) model to reach 92% accuracy with 9.3% faster inference, and applied t-SNE and Grad-CAM for model transparency. I have also worked on the visual analysis of personality traits in job interviews, using multi-modal data to predict traits and performance.
+
+Beyond research, I have hands-on experience in Python, C, C++, and JavaScript, as well as machine learning frameworks such as PyTorch and TensorFlow. I am skilled in data science tools, including post-hoc explainability and correlation analysis, and design software such as SolidWorks and 3DS Max. Recently, I have been improving my skills in data visualization tools like D3.js and Vue, and I enjoy bridging engineering design with computation to make analysis clearer and more reproducible.
 
 ## Skills
 
