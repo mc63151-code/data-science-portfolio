@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science Portfolio — Tang I Choi</title>
+<style>
+  :root {
+    --bg: #F2F7EF;
+    --primary: #CBD6ED;
+    --secondary: #BFDCDB;
+    --muted: #99A7A4;
+    --accent: #73696F;
+    --text: #2B2B2B;
+    --card-bg: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+  }
+  header.hero {
+    padding: 2.2rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 18px;
+    margin-bottom: 2.2rem;
+    box-shadow: 0 4px 18px rgba(115, 105, 111, 0.14);
+  }
+  header.hero h1 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: 0.3px;
+  }
+  header.hero p {
+    margin-top: 0.6rem;
+    max-width: 60ch;
+    color: #3A3A3A;
+    font-weight: 400;
+  }
+  section { margin-bottom: 2.6rem; }
+  .section-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+    padding-left: 0.85rem;
+    border-left: 5px solid var(--accent);
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--card-bg);
+    border: 1px solid var(--muted);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+  }
+  .skill-card h3 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+  .skill-card p { color: #3A3A3A; font-size: 1.0rem; }
+
+  /* Sliding carousel */
+  .slider-wrap { position: relative; }
+  .slider {
+    display: flex;
+    gap: 1.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0.4rem 0.4rem 1.2rem;
+    cursor: grab;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg);
+  }
+  .slider.dragging { cursor: grabbing; user-select: none; scroll-snap-type: none; }
+  .slider.dragging .project-card { pointer-events: none; scroll-snap-align: none; }
+  .slider::-webkit-scrollbar { height: 8px; }
+  .slider::-webkit-scrollbar-track { background: var(--bg); border-radius: 8px; }
+  .slider::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 8px; }
+  .project-card {
+    flex: 0 0 calc(100% - 1.4rem);
+    scroll-snap-align: start;
+    background: var(--card-bg);
+    border: 1px solid var(--muted);
+    border-radius: 16px;
+    padding: 1.6rem 1.7rem;
+    box-shadow: 0 4px 16px rgba(115, 105, 111, 0.10);
+  }
+  @media (min-width: 900px) {
+    .project-card { flex-basis: calc(100% - 1.4rem); }
+  }
+  .project-card h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.9rem;
+  }
+  .project-card h3 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  .project-card p, .project-card li { color: #3A3A3A; }
+  .project-card ul { padding-left: 1.3rem; margin-top: 0.2rem; }
+  .fig-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.6rem;
+  }
+  .fig-row figure {
+    flex: 1 1 240px;
+    max-width: 100%;
+  }
+  .fig-row img {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--muted);
+    background: #fff;
+  }
+  .fig-row figcaption {
+    font-size: 0.88rem;
+    color: var(--accent);
+    text-align: center;
+    margin-top: 0.35rem;
+  }
+  a.project-link {
+    display: inline-block;
+    margin-top: 1.2rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: opacity 0.2s ease;
+  }
+  a.project-link:hover { opacity: 0.85; }
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #FFFFFF;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(115, 105, 111, 0.35);
+    transition: opacity 0.2s ease;
+  }
+  .nav-btn:hover { opacity: 0.85; }
+  .nav-btn.prev { left: -16px; }
+  .nav-btn.next { right: -16px; }
+  @media (max-width: 640px) {
+    .nav-btn { display: none; }
+    .container { padding: 1.6rem 1rem 2.5rem; }
+    .project-card { flex-basis: calc(100% - 0.8rem); }
+  }
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.25); }
+  footer.contact {
+    margin-top: 1rem;
+    padding: 1.6rem 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--muted);
+    border-radius: 14px;
+  }
+  footer.contact h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; }
+  footer.contact a {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  footer.contact a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <h1>Tang I Choi (MC631517)</h1>
+    <p>Hi! I am a graduate student in Data Science at the University of Macau. I enjoy turning messy real-world data into clear, actionable insights through Python-based analysis and visualization.</p>
+  </header>
+
+  <section id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Programming</h3>
+        <p>Python (pandas, numpy, matplotlib, seaborn, geoplotlib)</p>
+      </div>
+      <div class="skill-card">
+        <h3>Data Analysis</h3>
+        <p>Data cleaning, exploratory data analysis, statistical summarization</p>
+      </div>
+      <div class="skill-card">
+        <h3>Visualization</h3>
+        <p>Static charts (matplotlib), spatial/geographic visualization, heatmaps</p>
+      </div>
+      <div class="skill-card">
+        <h3>Tools</h3>
+        <p>Jupyter Notebook, Git &amp; GitHub, GitHub Pages</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2 class="section-title">Projects</h2>
+    <div class="slider-wrap">
+      <button class="nav-btn prev" id="prevBtn" aria-label="Previous project">&#10094;</button>
+      <button class="nav-btn next" id="nextBtn" aria-label="Next project">&#10095;</button>
+
+      <div class="slider" id="slider">
+
+        <article class="project-card">
+          <h2>Chicago Traffic Crash Severity Analysis (2024–2025)</h2>
+          <h3>Research question</h3>
+          <p>What environmental, temporal, and demographic factors are associated with the severity of traffic crashes in Chicago during 2024–2025?</p>
+          <h3>What I did</h3>
+          <p>Analyzed 221,175 crash records from the Chicago Data Portal, examining how weather, lighting, road surface, speed limit, time of day, road-user type, and age relate to fatal or serious-injury outcomes.</p>
+          <h3>Key findings</h3>
+          <ul>
+            <li>Severe crashes (fatal or serious injury) made up about <strong>1.50%</strong> of all crashes.</li>
+            <li>Adverse conditions raised risk: rain (<strong>1.97%</strong> severe rate), dark-but-lighted roads (<strong>2.37%</strong>), and 36–40 mph zones (<strong>3.72%</strong>).</li>
+            <li>Vulnerable road users were most at risk: pedestrians (<strong>14.34%</strong>), motorcyclists (<strong>13.39%</strong>), and cyclists (<strong>7.53%</strong>).</li>
+          </ul>
+          <h3>Visualizations</h3>
+          <div class="fig-row">
+            <figure>
+              <img src="severe_rate_weather_lighting.png" alt="Severe crash rate by weather and lighting conditions">
+              <figcaption>Severe crash rate by weather &amp; lighting</figcaption>
+            </figure>
+            <figure>
+              <img src="severe_rate_weekday_hour.png" alt="Severe crash rate by weekday and hour">
+              <figcaption>Severe crash rate by weekday &amp; hour</figcaption>
+            </figure>
+          </div>
+          <a class="project-link" href="https://github.com/mc63151-code/data-science-project" target="_blank" rel="noopener">View project repository</a>
+        </article>
+
+        <article class="project-card">
+          <h2>Visualizing Severe Traffic Crash Patterns in Chicago (2024–2025)</h2>
+          <h3>Research question</h3>
+          <p>Where and under which temporal, environmental, road-user, and demographic conditions were severe traffic crashes and injuries disproportionately represented in Chicago during 2024–2025?</p>
+          <h3>What I did</h3>
+          <p>Assignment 02 pair project with Tan Min Fai (MC637132). Analyzed 220,709 crash records with known severity (3,312 severe crashes, 1.50% overall rate) and visualized severe-crash rates across month, weekday–hour, lighting–weather, road-user, demographic, and spatial dimensions.</p>
+          <h3>Key findings</h3>
+          <ul>
+            <li>Peak monthly severe-crash rate: <strong>2025-08</strong>; peak weekday–hour: <strong>Thursday 03:00</strong>.</li>
+            <li>Pedestrians had the highest severe-involvement rate among road users (<strong>13.61%</strong>); bicycles <strong>7.37%</strong>.</li>
+            <li>People aged <strong>75+</strong> had the highest severe-injury rate among age groups.</li>
+          </ul>
+          <h3>Visualizations</h3>
+          <div class="fig-row">
+            <figure>
+              <img src="monthly_crashes_and_severe_rate.png" alt="Monthly crashes and severe-crash rate">
+              <figcaption>Monthly crashes &amp; severe rate</figcaption>
+            </figure>
+            <figure>
+              <img src="lighting_weather_severe_rate_heatmap.png" alt="Severe-crash rate by lighting and weather heatmap">
+              <figcaption>Lighting × weather heatmap</figcaption>
+            </figure>
+            <figure>
+              <img src="speed_limit_units_boxplots.png" alt="Box plots of speed limit and units involved by severity">
+              <figcaption>Speed limit &amp; units box plots</figcaption>
+            </figure>
+            <figure>
+              <img src="person_severe_injury_rates.png" alt="Person severe-injury rates by age group and person type">
+              <figcaption>Person severe-injury rates</figcaption>
+            </figure>
+          </div>
+          <a class="project-link" href="https://github.com/mc63151-code/data-science-project/tree/main/Chicago-Severe-Crash-Visualization" target="_blank" rel="noopener">View project repository</a>
+        </article>
+
+      </div>
+
+      <div class="dots" id="dots"></div>
+    </div>
+  </section>
+
+  <footer class="contact">
+    <h2>Contact</h2>
+    <p>GitHub: <a href="https://github.com/mc63151-code" target="_blank" rel="noopener">mc63151-code</a></p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  const slider = document.getElementById('slider');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dotsWrap = document.getElementById('dots');
+  const cards = slider.querySelectorAll('.project-card');
+
+  // Dots
+  cards.forEach(function (_, i) {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to project ' + (i + 1));
+    d.addEventListener('click', function () { scrollToCard(i); });
+    dotsWrap.appendChild(d);
+  });
+  const dots = dotsWrap.querySelectorAll('.dot');
+
+  function scrollToCard(i) {
+    const card = cards[i];
+    slider.scrollTo({ left: card.offsetLeft - slider.offsetLeft, behavior: 'smooth' });
+  }
+
+  // Arrow buttons
+  function step(dir) {
+    const card = cards[dir > 0 ? 1 : 0];
+    slider.scrollBy({ left: dir * (card.offsetWidth + 22), behavior: 'smooth' });
+  }
+  prevBtn.addEventListener('click', function () { step(-1); });
+  nextBtn.addEventListener('click', function () { step(1); });
+
+  // Keyboard
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { step(-1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { step(1); e.preventDefault(); }
+  });
+
+  // Drag-to-scroll (mouse / touch)
+  let isDown = false, startX = 0, startScrollLeft = 0, moved = false;
+  slider.addEventListener('mousedown', function (e) {
+    isDown = true; moved = false;
+    startX = e.pageX - slider.offsetLeft;
+    startScrollLeft = slider.scrollLeft;
+    slider.classList.add('dragging');
+  });
+  slider.addEventListener('mouseleave', function () { endDrag(); });
+  slider.addEventListener('mouseup', function () { endDrag(); });
+  slider.addEventListener('mousemove', function (e) {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    slider.scrollLeft = startScrollLeft - walk;
+    if (Math.abs(walk) > 4) moved = true;
+  });
+  slider.addEventListener('click', function (e) {
+    if (moved) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  function endDrag() {
+    if (!isDown) return;
+    isDown = false;
+    slider.classList.remove('dragging');
+  }
+
+  // Active dot on scroll (snap end)
+  let ticking = false;
+  slider.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      const pos = slider.scrollLeft + slider.offsetLeft;
+      let activeIdx = 0;
+      cards.forEach(function (c, i) {
+        const left = c.offsetLeft;
+        if (pos >= left - slider.offsetWidth * 0.4) activeIdx = i;
+      });
+      dots.forEach(function (d, i) {
+        d.classList.toggle('active', i === activeIdx);
+      });
+      ticking = false;
+    });
+  });
+})();
+</script>
+</body>
+</html>
